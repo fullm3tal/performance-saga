@@ -1,7 +1,19 @@
-import { Text, View } from "react-native";
+import { EditText } from "@/components/common/EditText";
+import { useCallback } from "react";
+import { FlatList, ListRenderItemInfo, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
+  const data = Array.from({ length: 1000 }, (_, i) => `Number ${i + 1}`);
+
+  const renderItem = useCallback(({ item, index }: ListRenderItemInfo<any>) => {
+    return <EditText label={item.toString()} />;
+  }, []);
+
+  const renderKey = useCallback((item: string, index: number) => {
+    return item;
+  }, []);
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View
@@ -9,10 +21,17 @@ export default function HomeScreen() {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "red",
+          alignSelf: "center",
         }}
       >
-        <Text>Edit app/index.tsx to edit this screen.</Text>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={renderKey}
+          windowSize={5}
+          maxToRenderPerBatch={5}
+          updateCellsBatchingPeriod={10}
+        />
       </View>
     </SafeAreaView>
   );
