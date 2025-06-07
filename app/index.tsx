@@ -1,53 +1,75 @@
-import { useState } from "react";
-import { Button, FlatList, Text } from "react-native";
+import { useEffect, useState } from "react";
+import { Button, Text, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
-  const def = [
-    { id: "1", name: "iPhone 15", inStock: true },
-    { id: "2", name: "Samsung Galaxy S24", inStock: false },
-    { id: "3", name: "Google Pixel 8", inStock: true },
-    { id: "4", name: "OnePlus 12", inStock: true },
-    { id: "5", name: "Nokia 3310", inStock: false },
-  ];
-  const [products, setProducts] = useState<any[]>([...def]);
-
-  const [showProducts, setShowProducts] = useState(false);
-
-  console.log("prodpt" + JSON.stringify(products));
+  const [showForm, setShowForm] = useState(false);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Button
         title="Click Me"
         onPress={() => {
-          setShowProducts((prev) => !prev);
+          setShowForm((prev) => !prev);
         }}
       />
-      <Button
-        title="Delete a product"
-        onPress={() => {
-          setProducts((prev: any[]) => prev.slice(0, -1));
-        }}
-      />
-      <Button
-        title="Refresh"
-        onPress={() => {
-          setProducts([...def]);
-        }}
-      />
-      {showProducts ? <ProductListWrong products={products} /> : null}
+      {showForm ? <FormWrong /> : null}
     </SafeAreaView>
   );
 }
 
-const ProductListWrong = ({ products }: any) => {
-  const inStockProducts = products.filter((p: any) => p.inStock);
+function FormWrong() {
+  const [firstName, setFirstName] = useState("Taylor");
+  const [lastName, setLastName] = useState("Swift");
+
+  // ❌ Unnecessary extra state
+  const [fullName, setFullName] = useState("");
+
+  // ❌ Unnecessary useEffect
+  useEffect(() => {
+    setFullName(firstName + " " + lastName);
+  }, [firstName, lastName]);
+
   return (
-    <FlatList
-      data={products}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <Text>{item.name}</Text>}
-    />
+    <SafeAreaView style={{ padding: 16 }}>
+      <TextInput
+        value={firstName}
+        onChangeText={setFirstName}
+        placeholder="First Name"
+        style={{ borderWidth: 1, marginBottom: 10, padding: 8 }}
+      />
+      <TextInput
+        value={lastName}
+        onChangeText={setLastName}
+        placeholder="Last Name"
+        style={{ borderWidth: 1, marginBottom: 10, padding: 8 }}
+      />
+      <Text style={{ fontSize: 20 }}>Full Name: {fullName}</Text>
+    </SafeAreaView>
   );
-};
+}
+
+function FormRight() {
+  const [firstName, setFirstName] = useState("Taylor");
+  const [lastName, setLastName] = useState("Swift");
+  // ✅ Just calculate during render
+  const fullName = firstName + " " + lastName;
+
+  return (
+    <SafeAreaView style={{ padding: 16 }}>
+      <TextInput
+        value={firstName}
+        onChangeText={setFirstName}
+        placeholder="First Name"
+        style={{ borderWidth: 1, marginBottom: 10, padding: 8 }}
+      />
+      <TextInput
+        value={lastName}
+        onChangeText={setLastName}
+        placeholder="Last Name"
+        style={{ borderWidth: 1, marginBottom: 10, padding: 8 }}
+      />
+      <Text style={{ fontSize: 20 }}>Full Name: {fullName}</Text>
+    </SafeAreaView>
+  );
+}
