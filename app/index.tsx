@@ -1,4 +1,4 @@
-import { EditText } from "@/components/common/EditText";
+import { Card } from "@/components/common/Card";
 import { useCallback } from "react";
 import { FlatList, ListRenderItemInfo, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -6,9 +6,20 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function HomeScreen() {
   const data = Array.from({ length: 1000 }, (_, i) => `Number ${i + 1}`);
 
-  const renderItem = useCallback(({ item, index }: ListRenderItemInfo<any>) => {
-    return <EditText label={item.toString()} />;
-  }, []);
+  const onPress = () => {
+    console.log(`Current time is ${Date.now()}`);
+  };
+
+  const renderItem = ({ item, index }: ListRenderItemInfo<any>) => {
+    return (
+      <Card
+        label={item.toString()}
+        onPress={() => {
+          console.log(`Current time is ${Date.now()}`);
+        }}
+      />
+    );
+  };
 
   const renderKey = useCallback((item: string, index: number) => {
     return item;
