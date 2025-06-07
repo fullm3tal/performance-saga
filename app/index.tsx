@@ -1,18 +1,11 @@
-import { useEffect, useMemo, useState } from "react";
-import { Button, FlatList, Text, TextInput, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Button, Text, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function HomeScreen() {
   const [showForm, setShowForm] = useState(false);
+  const [userId, setUserId] = useState("123");
 
-  const todos = [
-    { id: "1", text: "Buy groceries", completed: true },
-    { id: "2", text: "Walk the dog", completed: false },
-    { id: "3", text: "Read a book", completed: false },
-    { id: "4", text: "Pay bills", completed: true },
-    { id: "5", text: "Workout", completed: false },
-  ];
-  const [filter, setFilter] = useState("all");
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Button
@@ -21,82 +14,52 @@ export default function HomeScreen() {
           setShowForm((prev) => !prev);
         }}
       />
-
-      <View>
-        <Button onPress={() => setFilter("all")} title="All" />
-        <Button onPress={() => setFilter("pending")} title="Pending" />
-        <Button onPress={() => setFilter("completed")} title="Completed" />
-      </View>
-
-      {showForm ? <TodoListcached todos={todos} filter={filter} /> : null}
+      <Button
+        title="Switch User"
+        onPress={() => setUserId(userId === "123" ? "456" : "123")}
+      />
+      <ProfilePageRight userId={userId} key={userId} />
     </SafeAreaView>
   );
 }
+function ProfilePage({ userId }: { userId: string }) {
+  const [comment, setComment] = useState("");
 
-function TodoListWrong({ todos, filter }: any) {
-  const [newTodo, setNewTodo] = useState("");
-  const [visibleTodos, setVisibleTodos] = useState<any[] | undefined>([]);
-
+  // 🔴 Inefficient: reset state using Effect
   useEffect(() => {
-    const filtered: any[] | undefined = getFilteredTodos(todos, filter);
-    setVisibleTodos(filtered);
-  }, [todos, filter]);
+    setComment("");
+  }, [userId]);
 
   return (
-    <SafeAreaView style={{ padding: 16 }}>
+    <SafeAreaView style={{ padding: 20 }}>
+      <Text>User ID: {userId}</Text>
       <TextInput
-        placeholder="New todo"
-        value={newTodo}
-        onChangeText={setNewTodo}
-        style={{ borderWidth: 1, marginBottom: 10, padding: 8 }}
-      />
-      <FlatList
-        data={visibleTodos}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <Text>{item.text}</Text>}
+        value={comment}
+        onChangeText={setComment}
+        placeholder="Write a comment..."
+        style={{ borderWidth: 1, padding: 10, marginTop: 10 }}
       />
     </SafeAreaView>
   );
 }
 
-function TodoList({ todos, filter }: any) {
-  const [newTodo, setNewTodo] = useState("");
-
-  // ✅ Directly compute during render
-  const visibleTodos = getFilteredTodos(todos, filter);
-
-  return (
-    <View>
-      <TextInput value={newTodo} onChangeText={setNewTodo} />
-      {visibleTodos?.map((todo) => (
-        <Text key={todo.id}>{todo.text}</Text>
-      ))}
-    </View>
-  );
+function ProfilePageRight({ userId }: { userId: string }) {
+  return <Profile key={userId} userId={userId} />;
 }
 
-function TodoListcached({ todos, filter }: any) {
-  const [newTodo, setNewTodo] = useState("");
-
-  // ✅ Caches result. Only recalculates when todos/filter change
-  const visibleTodos = useMemo(
-    () => getFilteredTodos(todos, filter),
-    [todos, filter] // Dependencies
-  );
+// ✅ Inner component
+function Profile({ userId }: { userId: string }) {
+  const [comment, setComment] = useState("");
 
   return (
-    <View>
-      <TextInput value={newTodo} onChangeText={setNewTodo} />
-      {visibleTodos?.map((todo) => (
-        <Text key={todo.id}>{todo.text}</Text>
-      ))}
-    </View>
+    <SafeAreaView style={{ padding: 20 }}>
+      <Text>User ID: {userId}</Text>
+      <TextInput
+        value={comment}
+        onChangeText={setComment}
+        placeholder="Write a comment..."
+        style={{ borderWidth: 1, padding: 10, marginTop: 10 }}
+      />
+    </SafeAreaView>
   );
-}
-
-function getFilteredTodos(todos: any[], filter: any) {
-  console.log("Filtering todos..."); // Simulate heavy work
-  if (filter === "all") return todos;
-  if (filter === "completed") return todos.filter((todo) => todo.completed);
-  if (filter === "pending") return todos.filter((todo) => !todo.completed);
 }
