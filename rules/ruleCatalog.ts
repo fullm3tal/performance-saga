@@ -14,6 +14,7 @@ const ruleCatalog: RuleDemo[] = [
     {id: 'PERF-8', title: 'Handle events in handlers', route: '/rules/perf-8'},
     {id: 'PERF-9', title: 'No useEffect chains', route: '/rules/perf-9'},
     {id: 'PERF-10', title: 'No useEffect for parent communication', route: '/rules/perf-10'},
+    {id: 'PERF-11', title: 'Optimize data selection', route: '/rules/perf-11'},
 ];
 
 export default ruleCatalog;

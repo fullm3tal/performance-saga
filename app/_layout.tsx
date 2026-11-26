@@ -45,6 +45,10 @@ export default function RootLayout() {
                     name="rules/perf-10"
                     options={{title: 'PERF-10 · Parent communication'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-11"
+                    options={{title: 'PERF-11 · Data selection'}}
+                />
             </Stack>
         </>
     );
