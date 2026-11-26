@@ -26,12 +26,19 @@ function useRenderLog(description: string, isWrong: boolean, truth: string) {
   return log.current;
 }
 
-function RenderLog({ entries }: { entries: { text: string; isWrong: boolean }[] }) {
+function RenderLog({
+  entries,
+}: {
+  entries: { text: string; isWrong: boolean }[];
+}) {
   return (
     <View style={styles.log}>
       {entries.map((entry, index) => (
         // Entries are only ever appended, so the position is a stable key.
-        <Text key={index} style={entry.isWrong ? styles.logBad : styles.logLine}>
+        <Text
+          key={index}
+          style={entry.isWrong ? styles.logBad : styles.logLine}
+        >
           {entry.text}
         </Text>
       ))}
@@ -42,9 +49,21 @@ function RenderLog({ entries }: { entries: { text: string; isWrong: boolean }[] 
 // ---------------------------------------------------------------------------
 // Part 1: cart badge
 
-function Badge({ testID, title, count }: { testID: string; title: string; count: number }) {
+function Badge({
+  testID,
+  title,
+  count,
+}: {
+  testID: string;
+  title: string;
+  count: number;
+}) {
   const actual = getCount();
-  const log = useRenderLog(`showed ${count}`, count !== actual, `cart has ${actual}`);
+  const log = useRenderLog(
+    `showed ${count}`,
+    count !== actual,
+    `cart has ${actual}`,
+  );
   return (
     <View style={styles.card}>
       <Text style={styles.cardTitle}>{title}</Text>
@@ -60,11 +79,23 @@ function Badge({ testID, title, count }: { testID: string; title: string; count:
 }
 
 function EffectBadge() {
-  return <Badge testID="effect-badge" title="❌ useEffect + useState" count={useCartCountWithEffect()} />;
+  return (
+    <Badge
+      testID="effect-badge"
+      title="❌ useEffect + useState"
+      count={useCartCountWithEffect()}
+    />
+  );
 }
 
 function SyncBadge() {
-  return <Badge testID="sync-badge" title="✅ useSyncExternalStore" count={useCartCount()} />;
+  return (
+    <Badge
+      testID="sync-badge"
+      title="✅ useSyncExternalStore"
+      count={useCartCount()}
+    />
+  );
 }
 
 function CartExample() {
@@ -73,8 +104,8 @@ function CartExample() {
   return (
     <View style={styles.section}>
       <Text style={styles.story}>
-        The cart lives outside React and already has 3 items. Each badge shows how many. Tap Mount, then read each
-        badge&apos;s render log.
+        The cart lives outside React and already has 3 items. Each badge shows
+        how many. Tap Mount, then read each badge&apos;s render log.
       </Text>
       <View style={styles.row}>
         <Button
@@ -97,7 +128,15 @@ function CartExample() {
 // ---------------------------------------------------------------------------
 // Part 2: checkout screen, online or offline
 
-function Checkout({ testID, title, isOnline }: { testID: string; title: string; isOnline: boolean }) {
+function Checkout({
+  testID,
+  title,
+  isOnline,
+}: {
+  testID: string;
+  title: string;
+  isOnline: boolean;
+}) {
   const actual = getIsOnline();
   const log = useRenderLog(
     isOnline ? "🟢 Online, Pay ON" : "🔴 Offline, Pay OFF",
@@ -107,11 +146,19 @@ function Checkout({ testID, title, isOnline }: { testID: string; title: string; 
   return (
     <View style={styles.card}>
       <Text style={styles.cardTitle}>{title}</Text>
-      <Text testID={`${testID}-banner`} style={[styles.banner, isOnline ? styles.bannerOnline : styles.bannerOffline]}>
+      <Text
+        testID={`${testID}-banner`}
+        style={[
+          styles.banner,
+          isOnline ? styles.bannerOnline : styles.bannerOffline,
+        ]}
+      >
         {isOnline ? "🟢 Online" : "🔴 Offline"}
       </Text>
       <View style={[styles.payButton, !isOnline && styles.payButtonDisabled]}>
-        <Text style={styles.payText}>{isOnline ? "Pay ₹499" : "Pay (needs internet)"}</Text>
+        <Text style={styles.payText}>
+          {isOnline ? "Pay ₹499" : "Pay (needs internet)"}
+        </Text>
       </View>
       <Text testID={`${testID}-renders`} style={styles.renderCount}>
         renders: {log.length}
@@ -122,11 +169,23 @@ function Checkout({ testID, title, isOnline }: { testID: string; title: string; 
 }
 
 function EffectCheckout() {
-  return <Checkout testID="effect-checkout" title="❌ useEffect + useState" isOnline={useIsOnlineWithEffect()} />;
+  return (
+    <Checkout
+      testID="effect-checkout"
+      title="❌ useEffect + useState"
+      isOnline={useIsOnlineWithEffect()}
+    />
+  );
 }
 
 function SyncCheckout() {
-  return <Checkout testID="sync-checkout" title="✅ useSyncExternalStore" isOnline={useIsOnline()} />;
+  return (
+    <Checkout
+      testID="sync-checkout"
+      title="✅ useSyncExternalStore"
+      isOnline={useIsOnline()}
+    />
+  );
 }
 
 function OnlineExample() {
@@ -137,13 +196,16 @@ function OnlineExample() {
   return (
     <View style={styles.section}>
       <Text style={styles.story}>
-        A checkout screen must only allow paying when the phone is online. The network status lives outside React
-        (like NetInfo).
+        A checkout screen must only allow paying when the phone is online. The
+        network status lives outside React (like NetInfo).
       </Text>
       <View style={styles.steps}>
         <Text>1. Turn Wi-Fi off.</Text>
         <Text>2. Open checkout.</Text>
-        <Text>3. Read render #1 on each side. Which one showed &quot;Online&quot; when you were offline?</Text>
+        <Text>
+          3. Read render #1 on each side. Which one showed &quot;Online&quot;
+          when you were offline?
+        </Text>
       </View>
       <View style={styles.row}>
         <Button
@@ -169,7 +231,15 @@ function OnlineExample() {
 
 // ---------------------------------------------------------------------------
 
-function Button({ testID, label, onPress }: { testID: string; label: string; onPress: () => void }) {
+function Button({
+  testID,
+  label,
+  onPress,
+}: {
+  testID: string;
+  label: string;
+  onPress: () => void;
+}) {
   return (
     <Pressable testID={testID} onPress={onPress} style={styles.button}>
       <Text style={styles.buttonText}>{label}</Text>
@@ -204,15 +274,40 @@ const styles = StyleSheet.create({
   story: { fontSize: 14, lineHeight: 20 },
   steps: { gap: 2, padding: 10, borderRadius: 8, backgroundColor: "#EEF3FF" },
   row: { flexDirection: "row", gap: 8 },
-  button: { flex: 1, alignItems: "center", justifyContent: "center", padding: 12, borderRadius: 8, backgroundColor: "#2F6FED" },
+  button: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 12,
+    borderRadius: 8,
+    backgroundColor: "#2F6FED",
+  },
   buttonText: { color: "#fff", fontWeight: "700", textAlign: "center" },
-  card: { flex: 1, gap: 6, padding: 10, borderRadius: 10, borderWidth: 2, borderColor: "#E3E5E8" },
+  card: {
+    flex: 1,
+    gap: 6,
+    padding: 10,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: "#E3E5E8",
+  },
   cardTitle: { fontSize: 12, fontFamily: "SpaceMono" },
   badge: { fontSize: 30, fontWeight: "800" },
-  banner: { padding: 8, borderRadius: 6, fontWeight: "800", textAlign: "center", overflow: "hidden" },
+  banner: {
+    padding: 8,
+    borderRadius: 6,
+    fontWeight: "800",
+    textAlign: "center",
+    overflow: "hidden",
+  },
   bannerOnline: { backgroundColor: "#E8F7EE", color: "#1E9E5A" },
   bannerOffline: { backgroundColor: "#FDECEC", color: "#D93F3F" },
-  payButton: { alignItems: "center", padding: 10, borderRadius: 6, backgroundColor: "#1E9E5A" },
+  payButton: {
+    alignItems: "center",
+    padding: 10,
+    borderRadius: 6,
+    backgroundColor: "#1E9E5A",
+  },
   payButtonDisabled: { backgroundColor: "#B8BCC2" },
   payText: { color: "#fff", fontWeight: "700", fontSize: 12 },
   renderCount: { fontSize: 15, fontWeight: "700" },
