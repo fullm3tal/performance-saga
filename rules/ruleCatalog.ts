@@ -17,6 +17,7 @@ const ruleCatalog: RuleDemo[] = [
     {id: 'PERF-11', title: 'Optimize data selection', route: '/rules/perf-11'},
     {id: 'PERF-12', title: 'Prevent memory leaks', route: '/rules/perf-12'},
     {id: 'PERF-13', title: 'Hoist iterator-independent calls', route: '/rules/perf-13'},
+    {id: 'PERF-14', title: 'useSyncExternalStore for stores', route: '/rules/perf-14'},
 ];
 
 export default ruleCatalog;

@@ -57,6 +57,10 @@ export default function RootLayout() {
                     name="rules/perf-13"
                     options={{title: 'PERF-13 · Hoist loop calls'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-14"
+                    options={{title: 'PERF-14 · useSyncExternalStore'}}
+                />
             </Stack>
         </>
     );
