@@ -41,6 +41,10 @@ export default function RootLayout() {
                     name="rules/perf-9"
                     options={{title: 'PERF-9 · No useEffect chains'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-10"
+                    options={{title: 'PERF-10 · Parent communication'}}
+                />
             </Stack>
         </>
     );
