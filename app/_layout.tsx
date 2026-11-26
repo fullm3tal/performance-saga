@@ -25,6 +25,10 @@ export default function RootLayout() {
                     name="rules/perf-5"
                     options={{title: 'PERF-5 · Shallow comparisons'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-6"
+                    options={{title: 'PERF-6 · Derive state'}}
+                />
             </Stack>
         </>
     );
