@@ -21,6 +21,7 @@ const ruleCatalog: RuleDemo[] = [
     {id: 'PERF-15', title: 'Clean up async effects', route: '/rules/perf-15'},
     {id: 'PERF-16', title: 'Guard one-time setup', route: '/rules/perf-16'},
     {id: 'PERF-17', title: 'No extra lookup layers', route: '/rules/perf-17'},
+    {id: 'PERF-21', title: 'List rows read their own data', route: '/rules/perf-21'},
 ];
 
 export default ruleCatalog;

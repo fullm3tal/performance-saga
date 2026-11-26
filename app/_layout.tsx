@@ -73,6 +73,10 @@ export default function RootLayout() {
                     name="rules/perf-17"
                     options={{title: 'PERF-17 · No extra lookups'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-21"
+                    options={{title: 'PERF-21 · Rows read own data'}}
+                />
             </Stack>
         </>
     );
