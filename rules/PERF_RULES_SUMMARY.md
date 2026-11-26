@@ -11,7 +11,7 @@ A quick reference for the 16 `PERF-*` rules that have demos in this folder. Each
 | [PERF-5](#perf-5--shallow-over-deep-comparisons) | Shallow over deep comparisons | In `memo` comparators, compare the few fields that matter, not `deepEqual` | [`perf5/`](perf5/) |
 | [PERF-6](#perf-6--derive-state-from-props) | Derive state from props | Compute values during render instead of syncing them with `useEffect` + `useState` | [`perf6/`](perf6/) |
 | [PERF-7](#perf-7--reset-via-key-prop) | Reset via key prop | Use `key={id}` to reset a component's state instead of a reset effect | [`perf7/`](perf7/) |
-| [PERF-8](#perf-8--handle-events-in-handlers) | Handle events in handlers | Put event logic in `onPress`/`onClick`, not in an effect watching a flag | [`perf8/`](perf8/) |
+| [PERF-8](#perf-8--handle-events-in-handlers) | Handle events in handlers | Put event logic in `onPress`/`onChangeText`, not in an effect watching a flag | [`perf8/`](perf8/) |
 | [PERF-9](#perf-9--no-useeffect-chains) | No useEffect chains | Don't have one effect set state that triggers another effect | [`perf9/`](perf9/) |
 | [PERF-10](#perf-10--no-useeffect-for-parent-communication) | No useEffect for parent communication | Lift state up instead of reporting it to the parent from an effect | [`perf10/`](perf10/) |
 | [PERF-11](#perf-11--optimize-data-selection) | Optimize data selection | Selectors should return narrow, stable values (primitives, existing references) | [`perf11/`](perf11/) |
@@ -106,7 +106,7 @@ const fullName = firstName + ' ' + lastName;
 **Fix:** Do the work directly in the event handler.
 
 ```tsx
-function handlePress() {
+function buyItem() {
     onBuy();
     showNotification('Item purchased!');
 }
@@ -122,7 +122,7 @@ function handlePress() {
 
 ```tsx
 const fullName = firstName + ' ' + lastName;
-const isValid = firstName.length > 0 && lastName.length > 0;
+const isValid = fullName.trim().length > 0;
 ```
 
 **Doesn't apply to:** intermediate state that drives UI (conditional rendering, props to a visible child, gating a subtree), or effects that handle separate concerns or external events.
@@ -190,7 +190,7 @@ const results = items.map((item) => item.value * config.multiplier);
 **Fix:** Use `useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)`.
 
 ```tsx
-return useSyncExternalStore(subscribe, () => navigator.onLine, () => true);
+return useSyncExternalStore(subscribe, () => AppState.currentState);
 ```
 
 **Doesn't apply to:** state that is transformed or debounced rather than mirrored, APIs that don't fit the subscribe/snapshot contract, or library-managed subscriptions (`useSelector`, `useQuery`).

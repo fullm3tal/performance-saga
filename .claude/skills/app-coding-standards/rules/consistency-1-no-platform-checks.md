@@ -15,9 +15,9 @@ Mixing platform-specific logic within components increases maintenance overhead,
 function Button() {
   const isAndroid = Platform.OS === 'android';
   return isAndroid ? (
-    <TouchableOpacity style={androidStyles} />
+    <Pressable style={styles.androidButton} android_ripple={rippleConfig} />
   ) : (
-    <button style={iosStyles} />
+    <TouchableOpacity style={styles.iosButton} />
   );
 }
 ```
@@ -25,14 +25,14 @@ function Button() {
 ### Correct
 
 ```tsx
-// Platform-specific file: Button.desktop.tsx
+// Platform-specific file: Button.android.tsx
 function Button() {
-  return <button style={desktopStyles} />;
+  return <Pressable style={styles.button} android_ripple={rippleConfig} />;
 }
 
-// Platform-specific file: Button.mobile.tsx
+// Platform-specific file: Button.ios.tsx
 function Button() {
-  return <TouchableOpacity style={mobileStyles} />;
+  return <TouchableOpacity style={styles.button} />;
 }
 ```
 

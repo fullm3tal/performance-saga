@@ -41,10 +41,9 @@ function App() {
 ### Correct (module-level execution)
 
 ```tsx
-if (typeof window !== 'undefined') {
-    checkAuthToken();
-    loadDataFromLocalStorage();
-}
+// Runs once, when this module is first imported.
+loadDataFromLocalStorage();
+checkAuthToken();
 
 function App() {
     // ...

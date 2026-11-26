@@ -13,14 +13,14 @@ Parent-child communication should not use useEffect. Instead, lift the state up 
 
 ```tsx
 // Avoid: passing data via useEffect
-function Child({ onValueChange }) {
+function Child({ onValueChange }: ChildProps) {
   const [value, setValue] = useState('');
 
   useEffect(() => {
     onValueChange(value);
   }, [value, onValueChange]);
 
-  return <input value={value} onChange={e => setValue(e.target.value)} />;
+  return <TextInput value={value} onChangeText={setValue} />;
 }
 ```
 
@@ -33,8 +33,8 @@ function Parent() {
   return <Child value={value} onChange={setValue} />;
 }
 
-function Child({ value, onChange }) {
-  return <input value={value} onChange={e => onChange(e.target.value)} />;
+function Child({ value, onChange }: ChildProps) {
+  return <TextInput value={value} onChangeText={onChange} />;
 }
 ```
 

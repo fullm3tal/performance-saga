@@ -26,8 +26,16 @@ function Form() {
   }, [firstName, lastName]);
 
   useEffect(() => {
-    setIsValid(fullName.length > 0);
+    setIsValid(fullName.trim().length > 0);
   }, [fullName]);
+
+  return (
+    <View>
+      <TextInput value={firstName} onChangeText={setFirstName} />
+      <TextInput value={lastName} onChangeText={setLastName} />
+      {isValid && <SubmitButton fullName={fullName} />}
+    </View>
+  );
 }
 ```
 
@@ -40,14 +48,14 @@ function Form() {
 
   // Good: compute derived values directly
   const fullName = firstName + ' ' + lastName;
-  const isValid = firstName.length > 0 && lastName.length > 0;
+  const isValid = fullName.trim().length > 0;
 
   return (
-    <form>
-      <input value={firstName} onChange={e => setFirstName(e.target.value)} />
-      <input value={lastName} onChange={e => setLastName(e.target.value)} />
-      {isValid && <button>Submit</button>}
-    </form>
+    <View>
+      <TextInput value={firstName} onChangeText={setFirstName} />
+      <TextInput value={lastName} onChangeText={setLastName} />
+      {isValid && <SubmitButton fullName={fullName} />}
+    </View>
   );
 }
 ```

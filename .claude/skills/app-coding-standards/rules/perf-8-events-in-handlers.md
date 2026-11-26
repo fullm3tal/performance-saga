@@ -12,7 +12,7 @@ Event handlers provide immediate response and clearer code flow. useEffect adds 
 ### Incorrect
 
 ```tsx
-function BuyButton({ productId, onBuy }) {
+function BuyButton({ onBuy }: BuyButtonProps) {
   const [isBuying, setIsBuying] = useState(false);
 
   // Avoid: handling events in useEffect
@@ -23,21 +23,29 @@ function BuyButton({ productId, onBuy }) {
     }
   }, [isBuying, onBuy]);
 
-  return <button onClick={() => setIsBuying(true)}>Buy</button>;
+  return (
+    <Pressable onPress={() => setIsBuying(true)}>
+      <Text>Buy</Text>
+    </Pressable>
+  );
 }
 ```
 
 ### Correct
 
 ```tsx
-function BuyButton({ productId, onBuy }) {
-  function handleClick() {
+function BuyButton({ onBuy }: BuyButtonProps) {
+  function buyItem() {
     // Good: handle event directly in event handler
     onBuy();
     showNotification('Item purchased!');
   }
 
-  return <button onClick={handleClick}>Buy</button>;
+  return (
+    <Pressable onPress={buyItem}>
+      <Text>Buy</Text>
+    </Pressable>
+  );
 }
 ```
 
@@ -48,7 +56,7 @@ function BuyButton({ productId, onBuy }) {
 Flag ONLY when ALL of these are true:
 
 - `useEffect` responds to user events
-- The event handler is available (onClick, onChange, etc.)
+- The event handler is available (onPress, onChangeText, etc.)
 - Logic could be moved directly to the event handler
 
 **DO NOT flag if:**

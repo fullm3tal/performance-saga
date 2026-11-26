@@ -43,12 +43,12 @@ useEffect(() => {
 useEffect(() => {
     const controller = new AbortController();
 
-    fetch(`/api/search?q=${query}`, {signal: controller.signal})
+    fetch(`/api/search?q=${encodeURIComponent(query)}`, {signal: controller.signal})
         .then((res) => res.json())
         .then((data) => setResults(data))
-        .catch((e) => {
-            if (e.name !== 'AbortError') {
-                setError(e);
+        .catch((error) => {
+            if (error.name !== 'AbortError') {
+                setError(error);
             }
         });
 

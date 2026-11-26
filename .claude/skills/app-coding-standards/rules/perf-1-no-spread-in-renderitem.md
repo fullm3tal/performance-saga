@@ -15,7 +15,7 @@ title: No spread in list item's renderItem
 <Component
   item={{
       shouldAnimateInHighlight: isItemHighlighted,
-      isSelected: selected,
+      isSelected,
       ...item,
   }}
 />

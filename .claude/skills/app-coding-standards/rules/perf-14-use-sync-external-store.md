@@ -12,28 +12,20 @@ title: Use useSyncExternalStore for external store subscriptions
 ### Incorrect
 
 ```tsx
-function useOnlineStatus() {
+function useAppState() {
   // Not ideal: Manual store subscription in an Effect
-  const [isOnline, setIsOnline] = useState(true);
+  const [appState, setAppState] = useState(AppState.currentState);
   useEffect(() => {
-    function updateState() {
-      setIsOnline(navigator.onLine);
-    }
-
-    updateState();
-
-    window.addEventListener('online', updateState);
-    window.addEventListener('offline', updateState);
-    return () => {
-      window.removeEventListener('online', updateState);
-      window.removeEventListener('offline', updateState);
-    };
+    const subscription = AppState.addEventListener('change', () => {
+      setAppState(AppState.currentState);
+    });
+    return () => subscription.remove();
   }, []);
-  return isOnline;
+  return appState;
 }
 
-function ChatIndicator() {
-  const isOnline = useOnlineStatus();
+function SyncIndicator() {
+  const appState = useAppState();
   // ...
 }
 ```
@@ -41,26 +33,23 @@ function ChatIndicator() {
 ### Correct
 
 ```tsx
-function subscribe(callback) {
-  window.addEventListener('online', callback);
-  window.addEventListener('offline', callback);
-  return () => {
-    window.removeEventListener('online', callback);
-    window.removeEventListener('offline', callback);
-  };
+function subscribe(callback: () => void) {
+  const subscription = AppState.addEventListener('change', callback);
+  return () => subscription.remove();
 }
 
-function useOnlineStatus() {
-  // Good: Subscribing to an external store with a built-in Hook
-  return useSyncExternalStore(
-    subscribe, // React won't resubscribe for as long as you pass the same function
-    () => navigator.onLine, // How to get the value on the client
-    () => true // How to get the value on the server
-  );
+function getSnapshot() {
+  return AppState.currentState;
 }
 
-function ChatIndicator() {
-  const isOnline = useOnlineStatus();
+function useAppState() {
+  // Good: Subscribing to an external store with a built-in Hook.
+  // React won't resubscribe for as long as you pass the same functions.
+  return useSyncExternalStore(subscribe, getSnapshot);
+}
+
+function SyncIndicator() {
+  const appState = useAppState();
   // ...
 }
 ```
@@ -71,9 +60,9 @@ function ChatIndicator() {
 
 Flag ONLY when ALL of these are true:
 
-- A `useEffect` subscribes to an external source (DOM events, third-party store, browser API)
+- A `useEffect` subscribes to an external source (native module events, third-party store, platform API)
 - Inside the listener, at least one `setState` call directly mirrors an external value
-  (e.g., `setWidth(window.innerWidth)`, `setOnline(navigator.onLine)`)
+  (e.g., `setWidth(Dimensions.get('window').width)`, `setAppState(AppState.currentState)`)
 - The pattern for that state variable follows: subscribe in setup, unsubscribe in cleanup,
   `setState(externalValue)` in the listener
 - Evaluate each state variable independently — if one state variable is a raw mirror of an
