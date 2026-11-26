@@ -49,6 +49,10 @@ export default function RootLayout() {
                     name="rules/perf-11"
                     options={{title: 'PERF-11 · Data selection'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-12"
+                    options={{title: 'PERF-12 · Memory leaks'}}
+                />
             </Stack>
         </>
     );
