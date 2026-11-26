@@ -1,13 +1,23 @@
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
+import {useFonts} from 'expo-font';
+import {Stack} from 'expo-router';
+import {StatusBar} from 'expo-status-bar';
 
 export default function RootLayout() {
-  return (
-    <>
-      <StatusBar style="dark" />
-      <Stack>
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-      </Stack>
-    </>
-  );
+    useFonts({SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf')});
+
+    return (
+        <>
+            <StatusBar style="dark" />
+            <Stack>
+                <Stack.Screen
+                    name="index"
+                    options={{headerShown: false}}
+                />
+                <Stack.Screen
+                    name="rules/perf-1"
+                    options={{title: 'PERF-1 · No spread in renderItem'}}
+                />
+            </Stack>
+        </>
+    );
 }
