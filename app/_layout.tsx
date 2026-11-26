@@ -17,6 +17,10 @@ export default function RootLayout() {
                     name="rules/perf-1"
                     options={{title: 'PERF-1 · No spread in renderItem'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-2"
+                    options={{title: 'PERF-2 · Return early'}}
+                />
             </Stack>
         </>
     );
