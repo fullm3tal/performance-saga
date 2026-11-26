@@ -65,6 +65,10 @@ export default function RootLayout() {
                     name="rules/perf-15"
                     options={{title: 'PERF-15 · Async effect races'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-16"
+                    options={{title: 'PERF-16 · Guard one-time setup'}}
+                />
             </Stack>
         </>
     );

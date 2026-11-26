@@ -19,6 +19,7 @@ const ruleCatalog: RuleDemo[] = [
     {id: 'PERF-13', title: 'Hoist iterator-independent calls', route: '/rules/perf-13'},
     {id: 'PERF-14', title: 'useSyncExternalStore for stores', route: '/rules/perf-14'},
     {id: 'PERF-15', title: 'Clean up async effects', route: '/rules/perf-15'},
+    {id: 'PERF-16', title: 'Guard one-time setup', route: '/rules/perf-16'},
 ];
 
 export default ruleCatalog;
