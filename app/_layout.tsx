@@ -29,6 +29,10 @@ export default function RootLayout() {
                     name="rules/perf-6"
                     options={{title: 'PERF-6 · Derive state'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-7"
+                    options={{title: 'PERF-7 · Reset via key'}}
+                />
             </Stack>
         </>
     );
