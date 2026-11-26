@@ -20,6 +20,7 @@ const ruleCatalog: RuleDemo[] = [
     {id: 'PERF-14', title: 'useSyncExternalStore for stores', route: '/rules/perf-14'},
     {id: 'PERF-15', title: 'Clean up async effects', route: '/rules/perf-15'},
     {id: 'PERF-16', title: 'Guard one-time setup', route: '/rules/perf-16'},
+    {id: 'PERF-17', title: 'No extra lookup layers', route: '/rules/perf-17'},
 ];
 
 export default ruleCatalog;

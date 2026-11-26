@@ -69,6 +69,10 @@ export default function RootLayout() {
                     name="rules/perf-16"
                     options={{title: 'PERF-16 · Guard one-time setup'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-17"
+                    options={{title: 'PERF-17 · No extra lookups'}}
+                />
             </Stack>
         </>
     );
