@@ -37,6 +37,10 @@ export default function RootLayout() {
                     name="rules/perf-8"
                     options={{title: 'PERF-8 · Events in handlers'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-9"
+                    options={{title: 'PERF-9 · No useEffect chains'}}
+                />
             </Stack>
         </>
     );

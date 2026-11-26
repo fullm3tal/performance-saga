@@ -1,6 +1,6 @@
 /**
- * PERF-8: handling the tap in useEffect costs an extra render and silently
- * drops repeat taps; handling it in onPress does neither.
+ * PERF-8: handling the tap in useEffect costs an extra render per tap (and
+ * needs a flag reset to not drop repeat taps); handling it in onPress does not.
  */
 import { fireEvent, render, screen } from "@testing-library/react-native";
 import Perf8Screen from "@/rules/perf8/Perf8Screen";
@@ -12,13 +12,13 @@ function tapThreeTimes(testID: string) {
 }
 
 describe("PERF-8: handle events in handlers", () => {
-  it("useEffect version: 1 purchase from 3 taps, with an extra render", () => {
+  it("useEffect version: every tap counts only because the flag is reset, at 2 renders per tap", () => {
     render(<Perf8Screen />);
     tapThreeTimes("effect-buy");
 
-    expect(screen.getByTestId("effect-purchases")).toHaveTextContent("purchases: 1");
-    // Mount + flag render + purchase render. Taps 2 and 3 change nothing.
-    expect(screen.getByTestId("effect-renders")).toHaveTextContent("renders: 3");
+    expect(screen.getByTestId("effect-purchases")).toHaveTextContent("purchases: 3");
+    // Mount + per tap: flag-on render, then purchase + flag-off batched into one render.
+    expect(screen.getByTestId("effect-renders")).toHaveTextContent("renders: 7");
   });
 
   it("onPress version: 3 purchases from 3 taps, one render each", () => {

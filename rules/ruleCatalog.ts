@@ -12,6 +12,7 @@ const ruleCatalog: RuleDemo[] = [
     {id: 'PERF-6', title: 'Derive state from props', route: '/rules/perf-6'},
     {id: 'PERF-7', title: 'Reset via key prop', route: '/rules/perf-7'},
     {id: 'PERF-8', title: 'Handle events in handlers', route: '/rules/perf-8'},
+    {id: 'PERF-9', title: 'No useEffect chains', route: '/rules/perf-9'},
 ];
 
 export default ruleCatalog;
