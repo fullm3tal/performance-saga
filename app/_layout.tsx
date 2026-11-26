@@ -61,6 +61,10 @@ export default function RootLayout() {
                     name="rules/perf-14"
                     options={{title: 'PERF-14 · useSyncExternalStore'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-15"
+                    options={{title: 'PERF-15 · Async effect races'}}
+                />
             </Stack>
         </>
     );
