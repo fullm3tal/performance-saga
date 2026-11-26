@@ -53,6 +53,10 @@ export default function RootLayout() {
                     name="rules/perf-12"
                     options={{title: 'PERF-12 · Memory leaks'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-13"
+                    options={{title: 'PERF-13 · Hoist loop calls'}}
+                />
             </Stack>
         </>
     );
