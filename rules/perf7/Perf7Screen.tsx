@@ -18,6 +18,8 @@ function DraftWithEffectReset({ contact }: { contact: string }) {
     setDraft("");
   }, [contact]);
 
+  console.log("DraftWithEffectReset render", { contact, draft });
+
   renderCounts.effect += 1;
   return (
     <View style={styles.card}>
@@ -40,6 +42,8 @@ function DraftWithEffectReset({ contact }: { contact: string }) {
 // contact means a brand-new component with fresh state, in one render.
 function Draft({ contact }: { contact: string }) {
   const [draft, setDraft] = useState("");
+
+  console.log("Draft render", { contact, draft });
 
   renderCounts.key += 1;
   return (

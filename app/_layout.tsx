@@ -33,6 +33,10 @@ export default function RootLayout() {
                     name="rules/perf-7"
                     options={{title: 'PERF-7 · Reset via key'}}
                 />
+                <Stack.Screen
+                    name="rules/perf-8"
+                    options={{title: 'PERF-8 · Events in handlers'}}
+                />
             </Stack>
         </>
     );
